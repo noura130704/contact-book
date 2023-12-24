@@ -40,3 +40,30 @@ exports.AddContact = (username, opts) => {
 exports.ListContacts = () => {
   console.log(ContactList);
 };
+
+exports.RemoveContact = (username) => {
+  if (!UsernameList.includes(username)) {
+    console.error("Error: Contact doesn't exist");
+    return;
+  }
+
+  const newUsernameList = UsernameList.filter((usrname) => {
+    return usrname !== username;
+  });
+
+  fs.writeFileSync(
+    `${__dirname}/../dev-data/username-list.json`,
+    JSON.stringify(newUsernameList)
+  );
+
+  const newContactList = ContactList.filter((contact) => {
+    return contact.username !== username;
+  });
+
+  fs.writeFileSync(
+    `${__dirname}/../dev-data/contact-list.json`,
+    JSON.stringify(newContactList)
+  );
+
+  console.log(`The contact with username: ${username} has been removed`);
+};
