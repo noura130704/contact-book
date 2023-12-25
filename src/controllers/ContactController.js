@@ -1,40 +1,35 @@
 const fs = require("node:fs");
 
-const ContactList = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/contact-list.json`)
-);
+const contactPath = `${__dirname}/../dev-data/contact-list.json`;
+const usernamePath = `${__dirname}/../dev-data/username-list.json`;
 
-const UsernameList = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/username-list.json`)
-);
+let ContactList = JSON.parse(fs.readFileSync(contactPath));
+let UsernameList = JSON.parse(fs.readFileSync(usernamePath));
+
+const saveContact = () => {
+  const space = 2;
+
+  fs.writeFileSync(usernamePath, JSON.stringify(UsernameList, null, space));
+  fs.writeFileSync(contactPath, JSON.stringify(ContactList, null, space));
+};
 
 exports.AddContact = (username, opts) => {
-  const { name, phone } = opts;
-
   if (UsernameList.includes(username)) {
     console.error("Error: Duplicate username. Must be unique!");
     return;
   }
 
+  const { name, phone } = opts;
+
   UsernameList.push(username);
-
-  fs.writeFileSync(
-    `${__dirname}/../dev-data/username-list.json`,
-    JSON.stringify(UsernameList)
-  );
-
   ContactList.push({
     username,
     name,
     phone,
   });
 
-  fs.writeFileSync(
-    `${__dirname}/../dev-data/contact-list.json`,
-    JSON.stringify(ContactList)
-  );
-
-  console.log("The new contact has been added...");
+  saveContact();
+  console.log("The new contact has been added");
 };
 
 exports.ListContacts = () => {
@@ -51,19 +46,13 @@ exports.RemoveContact = (username) => {
     return usrname !== username;
   });
 
-  fs.writeFileSync(
-    `${__dirname}/../dev-data/username-list.json`,
-    JSON.stringify(newUsernameList)
-  );
-
   const newContactList = ContactList.filter((contact) => {
     return contact.username !== username;
   });
 
-  fs.writeFileSync(
-    `${__dirname}/../dev-data/contact-list.json`,
-    JSON.stringify(newContactList)
-  );
+  UsernameList = newUsernameList;
+  ContactList = newContactList;
 
+  saveContact();
   console.log(`The contact with username: ${username} has been removed`);
 };

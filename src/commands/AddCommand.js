@@ -6,7 +6,7 @@ const addCommand = new Command("add");
 
 addCommand
   .description("Add a new contact")
-  .argument("<username>", "A unique name for the contact")
+  .argument("<username>", "A unique username for the contact")
   .requiredOption("--name <name>", "A name for the contact")
   .requiredOption("--phone <phone>", "A phone number for the contact")
   .action((username, opts) => {

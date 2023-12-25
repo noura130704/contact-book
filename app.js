@@ -1,14 +1,12 @@
-const commander = require("commander");
-const { Command } = commander;
+const { Command } = require("commander");
 
 const addCommand = require("./src/commands/AddCommand");
 const removeCommand = require("./src/commands/RemoveCommand");
 const listCommand = require("./src/commands/ListCommand");
 
-const program = new Command();
+const program = new Command("contact");
 
 program
-  .name("contact")
   .description("A Contact Book application for managing contacts")
   .version("0.1.0");
 
