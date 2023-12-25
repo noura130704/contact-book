@@ -1,17 +1,8 @@
 [
   {
+    "id": "6ba1f679-3412-4328-aa54-dfe0aa093e7d",
     "username": "Alpha",
     "name": "Celine Dept",
     "phone": "123-456-789"
-  },
-  {
-    "username": "Beta",
-    "name": "John Age",
-    "phone": "321-654-987"
-  },
-  {
-    "username": "Delta",
-    "name": "Matilda",
-    "phone": "987-654-321"
   }
 ]

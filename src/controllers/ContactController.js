@@ -1,4 +1,5 @@
 const fs = require("node:fs");
+const crypto = require("node:crypto");
 
 const contactPath = `${__dirname}/../dev-data/contact-list.json`;
 const usernamePath = `${__dirname}/../dev-data/username-list.json`;
@@ -23,6 +24,7 @@ exports.AddContact = (username, opts) => {
 
   UsernameList.push(username);
   ContactList.push({
+    id: crypto.randomUUID(),
     username,
     name,
     phone,
@@ -55,4 +57,17 @@ exports.RemoveContact = (username) => {
 
   saveContact();
   console.log(`The contact with username: ${username} has been removed`);
+};
+
+exports.SearchContact = (username) => {
+  if (!UsernameList.includes(username)) {
+    console.error("Error: Contact doesn't exist");
+    return;
+  }
+
+  const contact = ContactList.filter((contact) => {
+    return contact.username === username;
+  });
+
+  console.log(contact[0]);
 };

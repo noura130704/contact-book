@@ -3,6 +3,7 @@ const { Command } = require("commander");
 const addCommand = require("./src/commands/AddCommand");
 const removeCommand = require("./src/commands/RemoveCommand");
 const listCommand = require("./src/commands/ListCommand");
+const searchCommand = require("./src/commands/SearchCommand");
 
 const program = new Command("contact");
 
@@ -13,5 +14,6 @@ program
 program.addCommand(addCommand);
 program.addCommand(removeCommand);
 program.addCommand(listCommand);
+program.addCommand(searchCommand);
 
 program.parse();
