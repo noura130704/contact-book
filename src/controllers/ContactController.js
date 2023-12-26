@@ -1,6 +1,8 @@
 const fs = require("node:fs");
 const crypto = require("node:crypto");
 
+const Table = require("cli-table3");
+
 const contactPath = `${__dirname}/../dev-data/contact-list.json`;
 const usernamePath = `${__dirname}/../dev-data/username-list.json`;
 
@@ -35,7 +37,18 @@ exports.AddContact = (username, opts) => {
 };
 
 exports.ListContacts = () => {
-  console.log(ContactList);
+  const contacts = ContactList.map((contact) => {
+    return [contact.id, contact.username, contact.name, contact.phone];
+  });
+
+  const table = new Table({
+    head: ["id", "username", "name", "phone"],
+    colAligns: ["center", "center", "center", "center"],
+  });
+
+  table.push(...contacts);
+
+  console.log(table.toString());
 };
 
 exports.RemoveContact = (username) => {
@@ -69,5 +82,16 @@ exports.SearchContact = (username) => {
     return contact.username === username;
   });
 
-  console.log(contact[0]);
+  const table = new Table({
+    head: ["id", "username", "name", "phone"],
+    colAligns: ["center", "center", "center", "center"],
+  });
+
+  table.push(
+    ...contact.map((contact) => {
+      return [contact.id, contact.username, contact.name, contact.phone];
+    })
+  );
+
+  console.log(table.toString());
 };
